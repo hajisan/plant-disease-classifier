@@ -15,7 +15,8 @@ KEA 4. semester — Machine Learning | Eksamen: juni 2026
 ## Datasæt
 
 Roboflow — bd_plant_diseases (~25.000 træningsbilleder, kraftigt ubalanceret 1:143 ratio).  
-Datasæt ikke inkluderet i repoet — ligger lokalt og på Google Drive.
+Datasæt ikke inkluderet i repoet.  
+[Download datasæt fra Google Drive](https://drive.google.com/file/d/1eMoKLXOmAqcuhWV4YRsPBV8McsU55GLU/view?usp=share_link)
 
 ## Lokal kørsel
 
