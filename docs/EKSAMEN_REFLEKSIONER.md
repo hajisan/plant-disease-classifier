@@ -8,7 +8,10 @@
 - Mindste klasse: `Rice_Brown_spot` — 26 billeder i train
 - Største klasse: `Tomato_Yellow_Leaf_Curl_Virus` — 3.721 billeder i train
 - Modellen ser Rice-billeder ekstremt sjældent per epoch — selv med class weighting er 26 billeder for lidt til solid læring
-- Sammenlign med Vegetable Scanner: 15 klasser, alle velbалancerede med ~1.000 billeder per klasse → 95% accuracy
+- Sammenlign med Vegetable Scanner: 15 klasser, alle velbalancerede med ~1.000 billeder per klasse → 95% accuracy
+
+**Hvorfor er datasættet ubalanceret?**
+Ubalancen afspejler virkeligheden: nogle plantesygdomme er sjældne eller svære at dokumentere i felten, mens andre er udbredte og veldokumenterede. `Tomato_Yellow_Leaf_Curl_Virus` er en af de mest udbredte tomatvirusser globalt — der findes tusindvis af billeder online. Rice-sygdommene derimod forekommer mere sæsonbetinget og geografisk afgrænset, og kræver at man fysisk er på markerne på det rigtige tidspunkt. Datasættet er indsamlet fra Roboflow og afspejler hvad der var tilgængeligt — ikke hvad der ville være ideelt for en ML-model.
 
 **2. 35 klasser er komplekst**
 - Vegetable Scanner: 15 klasser → 95% accuracy
