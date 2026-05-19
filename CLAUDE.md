@@ -74,24 +74,25 @@ model.fit(training_set, epochs=epochs, validation_data=valid_set, class_weight=c
 
 ---
 
----
+## Lokal kørsel
 
-## Lokal prediktion
-
-- `predict.py` — tager en billedsti som argument, printer klasse og confidence
-- `class_names.json` — 35 klasser indekseret alfabetisk (matcher træningsdata)
-- `requirements.txt` — tensorflow==2.21.0, numpy, pillow
+- `app/predict.py` — tager en billedsti som argument, printer klasse og confidence
+- `app/app.py` — Gradio frontend, åbner på http://127.0.0.1:7860
+- `app/class_names.json` — 35 klasser indekseret alfabetisk (matcher træningsdata)
+- `requirements.txt` — tensorflow==2.21.0, numpy, pillow, gradio
 - Kræver Python 3.12 (TensorFlow understøtter ikke 3.13+)
 - Model-filen `plant_disease_model.keras` er gitignored — hentes fra Google Drive
+- `.gradio/` er gitignored
 
 ```bash
 python3.12 -m venv .venv
 .venv/bin/pip install -r requirements.txt
-.venv/bin/python predict.py billede.jpg
+.venv/bin/python app/predict.py billede.jpg   # enkelt prediktion
+.venv/bin/python app/app.py                   # Gradio frontend
 ```
 
 ---
 
 ## Eksamensfokus
 
-Se EKSAMEN_REFLEKSIONER.md for detaljerede svar på alle eksamensspørgsmål.
+Se docs/EKSAMEN_REFLEKSIONER.md for detaljerede svar på alle eksamensspørgsmål.
