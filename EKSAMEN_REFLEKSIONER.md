@@ -1,8 +1,8 @@
 # Eksamenrefleksioner — Plant Disease Classifier
 
-## Hvorfor ikke højere end 55–75% accuracy?
+## Hvorfor 87% val accuracy — og hvad begrænser modellen?
 
-Dette er ikke et svagt resultat — det er et forventeligt resultat givet datasættets begrænsninger. Til eksamen skal du kunne argumentere for dette.
+87% val accuracy på 35 ubalancerede klasser er et stærkt resultat. Til eksamen skal du kunne forklare både hvad der driver resultatet og hvad der begrænser det yderligere.
 
 **1. Kritisk ubalance (1:143 ratio)**
 - Mindste klasse: `Rice_Brown_spot` — 26 billeder i train
@@ -20,12 +20,16 @@ Dette er ikke et svagt resultat — det er et forventeligt resultat givet datas�
 - Modellen ser kun billedet, ikke plantetype — det skaber forvirring
 
 **4. Rice_Bacterial_leaf_blight og index-mismatch på test**
-- Klassen findes ikke i test-splittet
+- Klassen fandtes ikke i test-splittet i den originale Roboflow-download
 - Keras nummererer klasser alfabetisk — når én klasse mangler i test, forskydes alle efterfølgende klasser med 1 index
 - Fra klasse 18 og frem evalueres modellen mod forkerte labels (Rice_Brown_spot får index 18 i test, men 19 i træning osv.)
-- 17 ud af 35 klasser er systematisk misalignede — det forklarer test accuracy på 24.5% vs val accuracy på 87%
-- Val accuracy (87%) er den reelle og pålidelige metric — valid_set har alle 35 klasser korrekt alignet med træningen
-- Dette er en datasætbegrænsning, ikke en modelfejl — nævn det eksplicit til eksamen
+- 17 ud af 35 klasser er systematisk misalignede — det forklarer test accuracy på 24.5% vs val accuracy på 87% i første evaluering
+
+**Løsning — 3 billeder flyttet fra valid til test:**
+- 3 billeder fra `valid/Rice_Bacterial_leaf_blight` (7 billeder) blev flyttet til `test/Rice_Bacterial_leaf_blight`
+- Test har nu 35 klasser alignet med train og valid
+- Valid beholder 4 billeder — stadig brugbart til validering
+- Modellen retrænes på det opdaterede datasæt — test accuracy afspejler nu den reelle ydeevne
 
 ---
 
