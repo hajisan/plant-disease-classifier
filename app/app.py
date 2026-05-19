@@ -8,9 +8,13 @@ from tensorflow import keras
 from keras.applications.resnet50 import preprocess_input
 from PIL import Image
 
-model = keras.models.load_model("plant_disease_model.keras")
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "..", "plant_disease_model.keras")
+LABELS_PATH = os.path.join(BASE_DIR, "class_names.json")
 
-with open("class_names.json") as f:
+model = keras.models.load_model(MODEL_PATH)
+
+with open(LABELS_PATH) as f:
     labels = json.load(f)
 
 def predict(image):

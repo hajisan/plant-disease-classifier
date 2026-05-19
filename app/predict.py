@@ -7,8 +7,9 @@ from tensorflow import keras
 from keras.applications.resnet50 import preprocess_input
 from PIL import Image
 
-MODEL_PATH = "plant_disease_model.keras"
-LABELS_PATH = "class_names.json"
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+MODEL_PATH = os.path.join(BASE_DIR, "..", "plant_disease_model.keras")
+LABELS_PATH = os.path.join(BASE_DIR, "class_names.json")
 IMAGE_SIZE = (100, 100)
 
 def predict(image_path):
