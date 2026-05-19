@@ -19,7 +19,8 @@ Datasæt ikke inkluderet i repoet — ligger lokalt og på Google Drive.
 
 ## Lokal kørsel
 
-Kræver `plant_disease_model.keras` i projektets rod (ikke inkluderet i repoet — hentes fra Google Drive).
+Kræver `plant_disease_model.keras` i projektets rod (ikke inkluderet i repoet).  
+[Download model fra Google Drive](https://drive.google.com/file/d/1QHAF9ZuRAWnv4cT7721ilflhB6YZaWHh/view?usp=share_link)
 
 ```bash
 # Første gang
