@@ -130,6 +130,54 @@ Resultaterne var ustabile og utilfredsstillende:
 - Med `shuffle=True` ville rækkefølgen være tilfældig og forskellig for hver kørsel — labels og forudsigelser ville ikke matche hinanden
 - `shuffle=False` garanterer konsistent rækkefølge så confusion matrixen bliver korrekt
 
+---
+
+## Grundlæggende DNN-spørgsmål (kurrikulumkrav)
+
+### Hvad er en Deep Neural Network model?
+
+En DNN er et netværk af lag med neuroner der er forbundet med vægte. Data strømmer fra input-laget gennem ét eller flere skjulte lag til output-laget. "Deep" refererer til at der er flere skjulte lag.
+
+- **Input**: Rå data — her 100×100 px RGB-billeder flattened til en vektor af pixelværdier som ResNet50 modtager
+- **Output**: En sandsynlighedsfordeling over 35 klasser via softmax — den klasse med højest sandsynlighed er modellens forudsigelse
+- **Vægte (weights)**: Talværdier på forbindelserne mellem neuroner — det er vægtene der justeres under træning så modellen lærer. ResNet50 har ~25 millioner vægte, men de er frosset — kun custom head's ~3.76 MB trænes
+- **Bias**: En ekstra talværdi per neuron der lægges til summen inden aktivering — giver modellen mulighed for at forskyde aktiveringen uafhængigt af input. Uden bias kan netværket kun lære funktioner der går igennem origo
+- **Hidden layer**: Lag mellem input og output — her Dense(30, relu) × 2. Disse lag lærer abstrakte repræsentationer af data (kanter → teksturer → former → sygdomsmønstre)
+
+### Hvad er forward propagation?
+
+Data bevæger sig fremad igennem netværket lag for lag. For hver neuron: tag inputs, multiplicer med vægte, læg bias til, send resultatet gennem aktiveringsfunktionen. Gentag til output-laget. Resultatet er en forudsigelse.
+
+### Hvad er summerings-funktion (Sigma)?
+
+$$z = \sum (x_i \cdot w_i) + b$$
+
+For hver neuron summeres alle inputs (x) ganget med deres tilhørende vægte (w), plus bias (b). Dette tal sendes videre til aktiveringsfunktionen.
+
+### Hvad er aktiveringsfunktion — og findes der forskellige?
+
+Aktiveringsfunktionen bestemmer om og hvor meget en neuron "fyrer". Uden aktivering ville et netværk med mange lag kun kunne lære lineære sammenhænge.
+
+- **ReLU** (`relu`): `f(x) = max(0, x)` — bruges i de skjulte lag. Hurtig, simpel, undgår vanishing gradient
+- **Softmax**: Konverterer output-lagets rå tal til sandsynligheder der summer til 1 — bruges til multi-class klassifikation (vores 35 klasser)
+- Andre: Sigmoid (binær klassifikation), Tanh, Leaky ReLU
+
+### Hvad er target og error?
+
+- **Target**: Den korrekte label for et træningsbillede — f.eks. klasse 7 (`Corn_Common_rust`)
+- **Error (loss)**: Forskellen mellem modellens forudsigelse og target — måles med `sparse_categorical_crossentropy`. Jo lavere loss, jo tættere er modellen på de korrekte svar. Val loss faldt fra 1.70 → 0.38 over 20 epochs
+
+### Hvad er back propagation?
+
+Når forward propagation har givet en forudsigelse, beregnes fejlen (loss). Back propagation sender fejlsignalet baglæns gennem netværket og beregner hvor meget hver vægt bidrog til fejlen — dette bruges til at opdatere vægtene.
+
+- **Gradient**: Den afledede af loss med hensyn til en vægt — angiver retning og størrelse af den ændring der vil reducere fejlen mest. Stor gradient = vægt har stor indflydelse på fejlen
+- **Learning rate**: Hvor store skridt vi tager i retning af gradienten. Her `lr=0.0001` — vi sænkede det fra standard `0.001` fordi de aggressive class weights (op til ~50×) gav ustabil træning med høj lr
+- **Momentum**: En mekanisme der husker tidligere gradienter og "ruller videre" i samme retning — undgår at optimizeren hopper rundt og hjælper med at komme ud af lokale minima. Adam-optimizeren inkluderer momentum automatisk (standardværdi β₁=0.9)
+- **Ny vægt**: `w_ny = w_gammel - learning_rate × gradient` — subtraktion fordi vi vil minimere loss (bevæge os ned ad fejlfladen)
+
+---
+
 ## Parallel til AI Agenter projektet
 
 - PlotPlanner RAG (hajisan/plotplanner-rag): rådgiver om *hvad der skal plantes og ved siden af hvad*
