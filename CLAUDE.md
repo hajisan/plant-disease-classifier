@@ -2,7 +2,7 @@
 
 ## Projekt
 ResNet50 transfer learning til klassifikation af plantesygdomme.
-KEA 4. semester — Machine Learning, Jon Eikholm (jone@ek.dk)
+EK 4. semester — Machine Learning, Jon Eikholm (jone@ek.dk)
 Eksamen: 11–16. juni 2026 | Aflevering Wiseflow: senest 27. maj 2026 kl. 12.00
 
 ---

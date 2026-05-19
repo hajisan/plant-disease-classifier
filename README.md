@@ -2,7 +2,7 @@
 
 ResNet50 transfer learning til klassifikation af plantesygdomme på tværs af 35 klasser og 7 planter.
 
-KEA 4. semester — Machine Learning | Eksamen: juni 2026
+EK 4. semester — Machine Learning | Eksamen: juni 2026
 
 ## Model
 
