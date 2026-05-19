@@ -1,2 +1,0 @@
-image,output,timestamp
-,"{""label"": ""Rice_Brown_spot"", ""confidences"": [{""label"": ""Rice_Brown_spot"", ""confidence"": 0.767155110836029}, {""label"": ""Corn_healthy"", ""confidence"": 0.1220284029841423}, {""label"": ""EggPlant_White_Mold_Disease"", ""confidence"": 0.03041061945259571}, {""label"": ""Rice_Bacterial_leaf_blight"", ""confidence"": 0.01763548143208027}, {""label"": ""EggPlant_Healthy_Leaf"", ""confidence"": 0.014745009131729603}]}",2026-05-19 19:04:11.024612
