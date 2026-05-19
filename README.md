@@ -15,6 +15,8 @@ KEA 4. semester — Machine Learning | Eksamen: juni 2026
 ## Datasæt
 
 Roboflow — bd_plant_diseases (~25.000 træningsbilleder, kraftigt ubalanceret 1:143 ratio).  
+Ubalancen afspejler virkeligheden: sjældne sygdomme som `Rice_Brown_spot` (26 billeder) er svære at dokumentere i felten, mens udbredte sygdomme som `Tomato_Yellow_Leaf_Curl_Virus` (3.721 billeder) er veldokumenterede globalt.
+
 Datasæt ikke inkluderet i repoet.  
 [Download datasæt fra Google Drive](https://drive.google.com/file/d/1eMoKLXOmAqcuhWV4YRsPBV8McsU55GLU/view?usp=share_link)
 
