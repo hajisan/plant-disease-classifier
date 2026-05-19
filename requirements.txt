@@ -1,3 +1,6 @@
+gradio==6.14.0
+gradio_client==2.5.0
+hf-gradio==0.4.1
 numpy==2.4.6
 pillow==12.2.0
 tensorflow==2.21.0
