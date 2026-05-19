@@ -16,9 +16,10 @@ Eksamen: 11–16. juni 2026 | Aflevering Wiseflow: senest 27. maj 2026 kl. 12.00
 
 ### Kendte datasætproblemer
 
-**Manglende klasse i test:**
-- `Rice_Bacterial_leaf_blight` findes kun i train og valid, ikke i test
-- Denne klasse kan ikke evalueres på test — nævn det eksplicit til eksamen
+**Index-mismatch (løst):**
+- `Rice_Bacterial_leaf_blight` fandtes ikke i test-splittet i den originale Roboflow-download
+- Løsning: 3 billeder flyttet fra `valid/Rice_Bacterial_leaf_blight` til `test/Rice_Bacterial_leaf_blight`
+- Alle tre splits har nu 35 klasser med alignede indices
 
 **Kritisk ubalance (1:143 ratio):**
 - Mindste klasse: `Rice_Brown_spot` — 26 billeder i train
@@ -38,8 +39,10 @@ Eksamen: 11–16. juni 2026 | Aflevering Wiseflow: senest 27. maj 2026 kl. 12.00
 - **Base model**: ResNet50 pretrained på ImageNet, alle lag frosset
 - **Custom head**: Flatten → Dense(30, relu) → Dropout(0.2) → Dense(30, relu) → Dense(35, softmax)
 - **Loss**: sparse_categorical_crossentropy
-- **Optimizer**: Adam
+- **Optimizer**: Adam (lr=0.0001)
+- **Epochs**: 20
 - **Input**: 100x100 px, RGB
+- **Val accuracy**: 87.85% | **Test accuracy**: 87.82%
 
 Samme arkitektur som `RestNet_Vegetable_Scanner.ipynb` — tilpasset til 35 output-klasser.
 

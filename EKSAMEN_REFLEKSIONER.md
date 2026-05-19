@@ -94,14 +94,20 @@ Resultaterne var ustabile og utilfredsstillende:
 - Learning rate sænket 10× for at give mere stabil træning med de aggressive class weights
 - Epochs fordoblet til 20 for at give modellen tid til at konvergere
 - Samme arkitektur og class weighting — kun optimizerens hastighed ændret
+- Val accuracy 87% — men test accuracy kun 24.5% pga. index-mismatch (se punkt 4 ovenfor)
 
-Resultater anden kørsel:
-- Epoch 1: val_accuracy 0.56 → Epoch 10: 0.84 → Epoch 20: **0.87**
-- Train accuracy (0.81) < val accuracy (0.87) — som forventet pga. augmentering
-- Val loss faldt konsistent fra 1.63 → 0.39 — ingen overfitting
-- Modellen var stadig i gang med at lære ved epoch 20 — flere epochs ville sandsynligvis give yderligere forbedring
+**Tredje kørsel (endelig): 20 epochs, Adam lr=0.0001, rettet datasæt**
 
-**Til eksamen**: Dette er et godt eksempel på hyperparameter-tuning i praksis — man observerer ustabil træning, identificerer årsagen (for høj lr + aggressive weights) og justerer præcis den parameter der løser problemet. 87% val_accuracy på 35 ubalancerede klasser er et stærkt resultat der kan forsvares fagligt.
+- `Rice_Bacterial_leaf_blight` tilføjet til test — alle tre splits har nu 35 klasser
+- Samme hyperparametre som anden kørsel
+- Resultater:
+  - Epoch 1: val_accuracy 0.53 → Epoch 10: 0.83 → Epoch 20: **0.8785**
+  - Bedste val accuracy: epoch 18 — **0.8859**
+  - Train accuracy (0.83) < val accuracy (0.88) — som forventet pga. augmentering
+  - Val loss faldt konsistent fra 1.70 → 0.38 — ingen overfitting
+  - **Test accuracy: 87.82%** — næsten identisk med val accuracy
+
+**Til eksamen**: Dette er et godt eksempel på hyperparameter-tuning og datasætkvalitet i praksis — man observerer ustabil træning, identificerer årsagen (for høj lr + aggressive weights + manglende klasse i test) og løser begge problemer systematisk. 87.82% test accuracy på 35 ubalancerede klasser er et stærkt resultat der kan forsvares fagligt.
 
 ---
 

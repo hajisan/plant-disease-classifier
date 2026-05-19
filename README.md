@@ -7,9 +7,10 @@ KEA 4. semester — Machine Learning | Eksamen: juni 2026
 ## Model
 
 - **Arkitektur**: ResNet50 (ImageNet, frosset) + custom head
+- **Custom head**: Flatten → Dense(30, relu) → Dropout(0.2) → Dense(30, relu) → Dense(35, softmax)
 - **Input**: 100×100 px RGB
 - **Klasser**: 35 (Cauliflower, Corn, EggPlant, Potato, Rice, Tomato, Wheat)
-- **Val accuracy**: 87% (20 epochs, Adam lr=0.0001)
+- **Optimizer**: Adam (lr=0.0001) | **Epochs**: 20
 
 ## Datasæt
 
@@ -20,25 +21,20 @@ Datasæt ikke inkluderet i repoet — ligger lokalt og på Google Drive.
 
 ```
 plant-disease-classifier/
-├── Plant_Disease_Classifier.ipynb   
-├── CLAUDE.md                        
-├── EKSAMEN_REFLEKSIONER.md          
+├── Plant_Disease_Classifier.ipynb
+├── CLAUDE.md
+├── EKSAMEN_REFLEKSIONER.md
 ├── README.md
 └── docs/
-    ├── accuracy_over_epochs.png
-    ├── loss_over_epochs.png
-    ├── confusion_matrix.png
-    ├── model-summary_output.png
-    ├── model_evaluate_output.png
-    └── class_weights.md
 ```
 
 ## Resultater
 
 | Metric | Værdi |
 |--------|-------|
-| Val accuracy (epoch 20) | 87% |
-| Val loss (epoch 20) | 0.39 |
-| Test accuracy | 24.5%* |
+| Val accuracy (epoch 20) | 87.85% |
+| Val loss (epoch 20) | 0.38 |
+| Test accuracy | 87.82% |
+| Test loss | 0.40 |
 
-*Test accuracy er misvisende pga. index-mismatch — `Rice_Bacterial_leaf_blight` mangler i test-splittet og forskydes alle efterfølgende klasser. Se EKSAMEN_REFLEKSIONER.md.
+Val og test accuracy er næsten identiske — modellen generaliserer godt på tværs af alle 35 klasser.
