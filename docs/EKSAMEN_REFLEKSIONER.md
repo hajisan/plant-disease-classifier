@@ -33,6 +33,18 @@
 
 ---
 
+## Hvad er en CNN — og hvorfor bruger vi en til dette projekt?
+
+En Convolutional Neural Network (CNN) er en type DNN designet til at arbejde med billeddata. I stedet for at forbinde alle pixels direkte til alle neuroner (som en standard DNN ville), bruger en CNN **conv-lag** der scanner billedet med et lille filter og lærer lokale mønstre.
+
+- **Conv-lag**: Et filter (f.eks. 3×3 pixels) glider hen over billedet og aktiverer når det genkender et bestemt mønster (kant, tekstur, farveovergang)
+- **Max Pooling**: Reducerer billedets dimensioner ved at beholde det maksimale signal i hvert område — gør modellen mere robust overfor forskydninger og reducerer beregning
+- **Hierarkisk læring**: Tidlige lag lærer kanter og farver, senere lag kombinerer dem til former og til sidst sygdomsmønstre
+
+ResNet50 er en CNN med 50 lag og residual connections (skip connections) der løser problemet med vanishing gradients i meget dybe netværk. Den er pretrænet på ImageNet og kan genkende komplekse visuelle features — præcis hvad vi har brug for til plantesygdomme.
+
+---
+
 ## Hvorfor transfer learning med ResNet50?
 
 - ResNet50 er trænet på ImageNet (1.2 millioner billeder, 1.000 klasser)
