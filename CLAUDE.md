@@ -74,6 +74,24 @@ model.fit(training_set, epochs=epochs, validation_data=valid_set, class_weight=c
 
 ---
 
+---
+
+## Lokal prediktion
+
+- `predict.py` — tager en billedsti som argument, printer klasse og confidence
+- `class_names.json` — 35 klasser indekseret alfabetisk (matcher træningsdata)
+- `requirements.txt` — tensorflow==2.21.0, numpy, pillow
+- Kræver Python 3.12 (TensorFlow understøtter ikke 3.13+)
+- Model-filen `plant_disease_model.keras` er gitignored — hentes fra Google Drive
+
+```bash
+python3.12 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+.venv/bin/python predict.py billede.jpg
+```
+
+---
+
 ## Eksamensfokus
 
 Se EKSAMEN_REFLEKSIONER.md for detaljerede svar på alle eksamensspørgsmål.

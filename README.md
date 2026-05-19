@@ -17,15 +17,30 @@ KEA 4. semester — Machine Learning | Eksamen: juni 2026
 Roboflow — bd_plant_diseases (~25.000 træningsbilleder, kraftigt ubalanceret 1:143 ratio).  
 Datasæt ikke inkluderet i repoet — ligger lokalt og på Google Drive.
 
+## Lokal prediktion
+
+```bash
+# Første gang
+python3.12 -m venv .venv
+.venv/bin/pip install -r requirements.txt
+
+# Kør prediktion
+.venv/bin/python predict.py sti/til/billede.jpg
+```
+
+Kræver `plant_disease_model.keras` i samme mappe (ikke inkluderet i repoet).
+
 ## Struktur
 
 ```
 plant-disease-classifier/
 ├── Plant_Disease_Classifier.ipynb
+├── predict.py
+├── class_names.json
+├── requirements.txt
 ├── CLAUDE.md
 ├── EKSAMEN_REFLEKSIONER.md
-├── README.md
-└── docs/
+└── README.md
 ```
 
 ## Resultater
