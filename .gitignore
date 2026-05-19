@@ -3,3 +3,4 @@ plant_disease_model.keras
 .DS_Store
 __pycache__/
 *.pyc
+*.zip
