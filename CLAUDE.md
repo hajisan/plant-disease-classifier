@@ -1,0 +1,76 @@
+# CLAUDE.md — Plant Disease Classifier (ML Eksamensprojekt)
+
+## Projekt
+ResNet50 transfer learning til klassifikation af plantesygdomme.
+KEA 4. semester — Machine Learning, Jon Eikholm (jone@ek.dk)
+Eksamen: 11–16. juni 2026 | Aflevering Wiseflow: senest 27. maj 2026 kl. 12.00
+
+---
+
+## Datasæt — bd_plant_diseases.v1i.folder
+
+**Kilde**: Roboflow — plantdiseasesdataset/bd_plant_diseases  
+**Format**: folder (klassemapper klar til `flow_from_directory`)  
+**Splits**: train (~25.000), valid (~6.700), test (~3.000)  
+**Klasser**: 35 klasser fordelt på 7 planter (Cauliflower, Corn, EggPlant, Potato, Rice, Tomato, Wheat)
+
+### Kendte datasætproblemer
+
+**Manglende klasse i test:**
+- `Rice_Bacterial_leaf_blight` findes kun i train og valid, ikke i test
+- Denne klasse kan ikke evalueres på test — nævn det eksplicit til eksamen
+
+**Kritisk ubalance (1:143 ratio):**
+- Mindste klasse: `Rice_Brown_spot` — 26 billeder i train
+- Største klasse: `Tomato_Yellow_Leaf_Curl_Virus` — 3.721 billeder i train
+- Rice-klasserne (Brown spot, Leaf smut, Bacterial leaf blight) har 26–33 billeder — for lidt til solid læring
+- Løsning: class weighting via `compute_class_weight` fra sklearn
+
+**Omdøbte mappenavne (potentielle konflikter fjernet):**
+- `Tomato_Spider_mites Two-spotted_spider_mite` → `Tomato_Spider_mites`
+- `Corn_Cercospora_leaf_spot_(Gray_leaf_spot)` → `Corn_Cercospora_leaf_spot`
+- Skal være konsistent på tværs af alle tre splits (train, valid, test)
+
+---
+
+## Arkitektur
+
+- **Base model**: ResNet50 pretrained på ImageNet, alle lag frosset
+- **Custom head**: Flatten → Dense(30, relu) → Dropout(0.2) → Dense(30, relu) → Dense(35, softmax)
+- **Loss**: sparse_categorical_crossentropy
+- **Optimizer**: Adam
+- **Input**: 100x100 px, RGB
+
+Samme arkitektur som `RestNet_Vegetable_Scanner.ipynb` — tilpasset til 35 output-klasser.
+
+---
+
+## Class weighting
+
+Skal bruges pga. ubalancen. Eksempel:
+
+```python
+from sklearn.utils.class_weight import compute_class_weight
+import numpy as np
+
+classes = np.array(sorted(training_set.class_indices.values()))
+weights = compute_class_weight(class_weight='balanced', classes=classes, y=training_set.classes)
+class_weight_dict = dict(zip(classes, weights))
+
+model.fit(training_set, epochs=epochs, validation_data=valid_set, class_weight=class_weight_dict)
+```
+
+---
+
+## Evalueringsmetrikker
+
+- Accuracy og loss på valid_set per epoch
+- `model.evaluate(test_set)` på test
+- Confusion matrix — forventer at Rice-klasserne klarer sig dårligst
+- Peg på hvilke klasser der forveksles og hvorfor (visuel lighed, f.eks. Early blight på tomat vs. kartoffel)
+
+---
+
+## Eksamensfokus
+
+Se EKSAMEN_REFLEKSIONER.md for detaljerede svar på alle eksamensspørgsmål.
