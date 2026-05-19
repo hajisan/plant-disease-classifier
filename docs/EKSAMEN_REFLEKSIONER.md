@@ -193,6 +193,32 @@ Når forward propagation har givet en forudsigelse, beregnes fejlen (loss). Back
 
 ---
 
+## Hvordan ville vi forbedre modellen yderligere?
+
+**Større input (224×224 i stedet for 100×100)**
+ResNet50 er designet til 224×224 px — vi nedskalerede til 100×100 for at spare beregningstid. Med native inputstørrelse ville modellen bevare flere detaljer i billederne, særligt subtile sygdomsmønstre der forsvinder ved nedskalering. Det ville sandsynligvis give en mærkbar forbedring i accuracy.
+
+**Unfreeze de øverste ResNet-lag (fine-tuning)**
+I stedet for at fryse hele ResNet50 kunne man optøe de sidste 10–20 lag og træne dem med en meget lav learning rate (f.eks. 1e-5). De øverste lag er de mest domænespecifikke — ved at tilpasse dem til plantebilleder ville modellen lære mere relevante features end de generelle ImageNet-features.
+
+**Mere data til de mindste klasser**
+Rice-klasserne med 26–33 billeder er for lidt til solid læring uanset class weighting. Løsningen ville være at indsamle eller syntetisere flere billeder — f.eks. via aggressiv augmentering kun på disse klasser, eller ved at finde supplerende datasæt.
+
+---
+
+## Hvordan kan data og modeloutput repræsenteres bedre?
+
+**Classification report (per-klasse metrics)**
+`model.evaluate` giver kun samlet accuracy. Med sklearns `classification_report` får man precision, recall og F1-score per klasse — langt mere informativt når datasættet er ubalanceret. En Rice-klasse med 26 billeder kan have 0% recall selvom samlet accuracy er 87%.
+
+**Grad-CAM (Gradient-weighted Class Activation Mapping)**
+En teknik der visualiserer hvilke dele af billedet modellen kigger på når den laver en forudsigelse — producerer et heatmap oven på billedet. Gør modellens beslutning transparent og er stærkt visuelt til en demo. Viser f.eks. at modellen fokuserer på bladpletten og ikke baggrunden.
+
+**Confidence-fordeling**
+I stedet for bare at vise top-1 forudsigelse kan man plotte sandsynlighedsfordelingen over alle 35 klasser for et givet billede — Gradio-appen viser allerede top-5. Det afslører om modellen er sikker (én klasse dominerer) eller usikker (sandsynlighederne er spredte).
+
+---
+
 ## Parallel til AI Agenter projektet
 
 - PlotPlanner RAG (hajisan/plotplanner-rag): rådgiver om *hvad der skal plantes og ved siden af hvad*
